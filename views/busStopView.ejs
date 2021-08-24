@@ -2,19 +2,22 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<title>Bus Stop</title>
+    <meta charset="utf-8">
+    <title>Bus Stop</title>
 </head>
 
 <body id="home">
-	<h1>Postcode</h1>
-	<ul>
-		<%
-			data.forEach((address) => { %>
-			<li><b><%= address.showBusData() %></b></li>
-		<% });
-		%>
-	</ul>
+    <h1>Postcode</h1>
+    <ul>
+        <% data.forEach((busStop)=> { %>
+            <li><b>
+                    <%= busStop.showPostcode() %>
+                </b></li>
+            <% }); 
+        %>
+    </ul>
 </body>
+
 </html>
