@@ -1,0 +1,20 @@
+<!-- views/busStopView.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Bus Stop</title>
+</head>
+
+<body id="home">
+	<h1>Postcode</h1>
+	<ul>
+		<%
+			data.forEach((address) => { %>
+			<li><b><%= address.showBusData() %></b></li>
+		<% });
+		%>
+	</ul>
+</body>
+</html>
