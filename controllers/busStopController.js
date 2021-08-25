@@ -1,8 +1,8 @@
 const BusStop = require('../models/Postcode');
+const Coordinates = require('../models/Coordinates');
 const fetch = require('node-fetch');
 
 exports.getPostcode = (req, res) => {
-    // res.send(req.params)
     let data = [
         new BusStop('NW22QA'),
         new BusStop('N200UA'),
@@ -14,21 +14,45 @@ exports.getPostcode = (req, res) => {
     });
 };
 
+exports.getCoordinates = async (req, res) => {
+
+    try {
+
+
+        let data = await getCoordinatesByPostcode(req.params.postcode);
+
+        console.log(`postcode ${data}`);
+        // let data = getCoordinatesByPostcode(req.params.postcode)
+        res.render('busStopView', {
+            data: data,
+        });
+    } catch (e) {
+        res.status(500).json({
+            status: false,
+            error: e.message
+        })
+    }
+};
+
 async function getCoordinatesByPostcode(postcode) {
 
     console.log(`called with ${postcode}`);
 
-    const response = fetch(`http://api.postcodes.io/Postcodes/${postcode}`)
-        .then(data => data.json)
-        .then(console.log(data));
+    let data = await fetch(`http://api.postcodes.io/Postcodes/${postcode}`)
+        .then(result => result.json());
+    console.log(`response ${data}`);
 
-        // while (response["error"] == "Invalid postcode") {
-        //     console.log(`Error: ${response["error"]}. Please try again. \n The postcode you entered was: "${postcode}".`)
-        //     return await getCoordinates(postcode);
-        // }
-        if (response["error"] == "Invalid postcode") {
-            return response["error"];
-        }
-    
-        return [response["result"]["latitude"], response["result"]["longitude"]]; 
+    console.log(`response json ${data["status"]}`);
+    // 
+
+
+    while (data["error"] == "Invalid postcode") {
+        console.log(`Error: ${data["error"]}. Please try again. \n The postcode you entered was: "${postcode}".`)
+        return await getCoordinates(postcode);
+    }
+    if (data["error"] == "Invalid postcode") {
+        return data["error"];
+    }
+
+    return data;
 };
