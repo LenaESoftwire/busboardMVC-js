@@ -21,7 +21,7 @@ exports.getCoordinates = async (req, res) => {
 
         let data = await getCoordinatesByPostcode(req.params.postcode);
 
-        console.log(`postcode ${data}`);
+        console.log(`lat ${data.latitude} lon ${data.longitude}`);
         // let data = getCoordinatesByPostcode(req.params.postcode)
         res.render('busStopView', {
             data: data,
@@ -40,19 +40,21 @@ async function getCoordinatesByPostcode(postcode) {
 
     let data = await fetch(`http://api.postcodes.io/Postcodes/${postcode}`)
         .then(result => result.json());
-    console.log(`response ${data}`);
+    console.log(`response ${data["result"]["latitude"]}`);
 
-    console.log(`response json ${data["status"]}`);
-    // 
+    console.log(`response json ${data["result"]["longitude"]}`);
+   
+    return new Coordinates([data["result"]["latitude"], data["result"]["longitude"]])
 
 
-    while (data["error"] == "Invalid postcode") {
-        console.log(`Error: ${data["error"]}. Please try again. \n The postcode you entered was: "${postcode}".`)
-        return await getCoordinates(postcode);
-    }
-    if (data["error"] == "Invalid postcode") {
-        return data["error"];
-    }
 
-    return data;
+    // while (data["error"] == "Invalid postcode") {
+    //     console.log(`Error: ${data["error"]}. Please try again. \n The postcode you entered was: "${postcode}".`)
+    //     return await getCoordinates(postcode);
+    // }
+    // if (data["error"] == "Invalid postcode") {
+    //     return data["error"];
+    // }
+
+    // return data;
 };
