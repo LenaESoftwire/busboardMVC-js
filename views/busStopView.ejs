@@ -9,7 +9,7 @@
 </head>
 
 <body id="home">
-    <h1>Postcode</h1>
+    <h1>Postcode <%= data[0].showPostCode() %></h1>
     <ul>
         <%data.forEach((stop)=> { %>
             <li><b><%= stop.showBusStop() %></b></li>

@@ -6,7 +6,7 @@ exports.getBusStops = async (req, res) => {
 
     try {
         let coordinates = await getCoordinatesByPostcode(req.params.postcode);
-        let data = await getNearestBusStops(coordinates);
+        let data = await getNearestBusStops(req.params.postcode, coordinates);
         // if (data["error"] == "Invalid postcode") {
         //     res.render('errorView', {
         //         data: data["error"],
@@ -58,7 +58,7 @@ async function getCoordinatesByPostcode(postcode) {
     return new Coordinates([data["result"]["latitude"], data["result"]["longitude"]]);
 };
 
-async function getNearestBusStops(coordinates) {
+async function getNearestBusStops(postcode, coordinates) {
 
     let busStops = await fetch(`https://api.tfl.gov.uk/StopPoint/?lat=${coordinates.latitude}&lon=${coordinates.longitude}&stopTypes=NaptanPublicBusCoachTram&radius=1000`)
         .then(data => data.json())
@@ -68,15 +68,12 @@ async function getNearestBusStops(coordinates) {
 
     let stops = [];
     for (let i=0; i<2; i++) {
-        stops.push(new BusStop(busStops[i]["naptanId"]));
+        stops.push(new BusStop(postcode, busStops[i]["naptanId"]));
     }
    
     console.log(stops);
     return stops;
 }
-
-
-
 
 exports.getPostcode = (req, res) => {
     let data = [

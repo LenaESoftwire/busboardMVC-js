@@ -1,6 +1,11 @@
 class BusStop{
-    constructor(busstop) {
+    constructor(postcode, busstop) {
+        this.postcode = postcode,
         this.busStopNaptan = busstop
+    }
+
+    showPostCode() {
+        return `${this.postcode}`;
     }
 
     showBusStop() {
