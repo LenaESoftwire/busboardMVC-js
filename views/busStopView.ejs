@@ -11,13 +11,10 @@
 <body id="home">
     <h1>Postcode</h1>
     <ul>
-        
-        <li><b>
-                <%= data.showCoordinates() %>
-               
-            </b>
-        </li>
-       
+        <%data.forEach((stop)=> { %>
+            <li><b><%= stop.showBusStop() %></b></li>
+        <% }); 
+        %>
     </ul>
 </body>
 
