@@ -1,12 +1,11 @@
 class BusStop{
-    constructor(postcode, naptanId, commonName, stopLetter, modes) {
+    constructor(postcode, naptanId, commonName, stopLetter, modes, buses) {
         this.postcode = postcode,
         this.busStopNaptan = naptanId,
         this.commonName = commonName,
         this.stopLetter = stopLetter,
-        this.modes = modes
-        // 
-        // this.buses = buses
+        this.modes = modes,
+        this.buses = buses
     }
 
     showPostCode() {
@@ -20,8 +19,6 @@ class BusStop{
     showBusStopName() {
         return `busstop ${this.commonName} ${this.stopLetter}`;
     }
-
-    show
 };
 
 module.exports = BusStop;

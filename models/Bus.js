@@ -1,5 +1,6 @@
 class Bus{
-    constructor(lineId, destination, timeToStation) {
+    constructor( lineId, destination, timeToStation) {
+        // this.stop = stop,
         this.lineId = lineId,
         this.destination = destination,
         this.timeToStation = timeToStation

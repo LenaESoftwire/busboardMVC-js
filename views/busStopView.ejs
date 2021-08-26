@@ -9,13 +9,23 @@
 </head>
 
 <body id="home">
-    <h1>Postcode <%= data[0].showPostCode() %></h1>
+    <h1>Postcode <%= data[0].showPostCode() %>
+    </h1>
     <ul>
         <%data.forEach((stop)=> { %>
-            <li><b><%= stop.showBusStop() %></b></li>
-            <li><b><%= stop.showBusStopName() %></b></li>
-        <% }); 
-        %>
+            <p><b>
+                    <%= stop.showBusStop() %>
+                </b>
+                <b>
+                    <%= stop.showBusStopName() %>
+                </b>
+            </p>
+            <%stop.buses.forEach((bus)=> { %>
+                <p>
+                    <%= `bus N${bus.lineId} going to ${bus.destination} arrives in ${parseInt(bus.timeToStation/60)} min` %>
+                </p>
+                <% }); %>
+                    <% }); %>
     </ul>
 </body>
 
