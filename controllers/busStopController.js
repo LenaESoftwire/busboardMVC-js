@@ -89,7 +89,7 @@ async function getBuses(busStopNaptanId) {
         busList.push(bus);
     }
     
-    busList.sort((bus1, bus2) => bus1.timeToStation - bus2.timeToStation).slice(4);
+    busList = busList.sort((bus1, bus2) => bus1.timeToStation - bus2.timeToStation).slice(0, 5);
     console.log(busList);
 
 
