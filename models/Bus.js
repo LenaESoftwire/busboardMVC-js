@@ -1,15 +1,13 @@
 class Bus{
     constructor( lineId, destination, timeToStation) {
-        // this.stop = stop,
         this.lineId = lineId,
         this.destination = destination,
         this.timeToStation = timeToStation
-        // 
-        // this.buses = buses
+        this.buses = [];
     }
 
     showBus() {
-        return `bus N${this.lineId} going to ${this.destination} arrives in ${this.timeToStation/60} minutes`
+        return `Bus N${this.lineId} going to ${this.destination} arrives in ${parseInt(this.timeToStation/60)} minutes`
     }
 }
 module.exports = Bus;

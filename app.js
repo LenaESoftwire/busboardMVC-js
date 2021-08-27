@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const testController = require('./controllers/testController');
 const busStopController = require('./controllers/busStopController');
-// const param = "postcode";
+app.use(express.static('./styling/busStopView.css'));
 
 var port = process.env.PORT || 8080;
 

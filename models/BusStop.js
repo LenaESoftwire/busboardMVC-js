@@ -1,11 +1,11 @@
-class BusStop {
+class BusStop{
     constructor(postcode, naptanId, commonName, stopLetter, modes, buses) {
         this.postcode = postcode,
-            this.busStopNaptan = naptanId,
-            this.commonName = commonName,
-            this.stopLetter = stopLetter,
-            this.modes = modes,
-            this.buses = buses
+        this.busStopNaptan = naptanId,
+        this.commonName = commonName,
+        this.stopLetter = stopLetter,
+        this.modes = modes,
+        this.buses = buses
     }
 
     showPostCode() {
@@ -13,7 +13,7 @@ class BusStop {
     }
 
     showBusStopName() {
-        return `busstop ${this.commonName} ${this.stopLetter}`;
+        return `Busstop ${this.commonName} ${this.stopLetter}`;
     }
 };
 

@@ -22,8 +22,7 @@
                     <% if (stop.buses!==0) { %>
                         <%stop.buses.forEach((bus)=> { %>
                             <p>
-                                <%= `Bus N${bus.lineId} going to ${bus.destination} arrives in
-                                    ${parseInt(bus.timeToStation/60)} min` %>
+                                <%= bus.showBus() %>
                             </p>
                         <% }); %>
                     <% }; %>

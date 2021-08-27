@@ -8,7 +8,7 @@ exports.getBusStops = async (req, res) => {
 
     try {
         let coordinates = await getCoordinatesByPostcode(req.params.postcode);
-        console.log(coordinates);
+        
         if (coordinates.status === 404) {
             res.render('errorView', {
                 data: coordinates,
@@ -16,14 +16,14 @@ exports.getBusStops = async (req, res) => {
             return;
         }
         let stops = await getNearestBusStops(req.params.postcode, coordinates);
-        console.log("stops");
-        if (stops.status === 404) {
+    
+        if (stops.length === 0) {
             res.render('errorView', {
-                data: stops,
+                data: new Error(404, `There are no bus stops around ${req.params.postcode}`)
             });
             return;
         }
-        console.log(`stops: ${stops}`);
+
         let buses = await getBuses(stops[0].busStopNaptan);
         stops[0].buses = buses;
         buses = await getBuses(stops[1].busStopNaptan);
@@ -31,22 +31,6 @@ exports.getBusStops = async (req, res) => {
 
         res.render('busStopView', {
             data: stops,
-        });
-
-    } catch (e) {
-        res.status(500).json({
-            status: false,
-            error: e.message
-        })
-    }
-};
-exports.getCoordinates = async (req, res) => {
-
-    try {
-        let data = await getCoordinatesByPostcode(req.params.postcode);
-
-        res.render('busStopView', {
-            data: data,
         });
 
     } catch (e) {
@@ -76,12 +60,8 @@ async function getNearestBusStops(postcode, coordinates) {
             .filter(a => a.modes.includes('bus'))
             .slice(0, 2));
 
-    if (busStops.length == 0) {
-        return new Error(404, `There are no bus stops around ${postcode}`);
-    }
-
     let stops = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 2 && i < busStops.length; i++) {
         stops.push(new BusStop(postcode, busStops[i]["naptanId"], busStops[i]["commonName"], busStops[i]["stopLetter"], busStops[i]["modes"], []));
     }
 
@@ -101,8 +81,6 @@ async function getBuses(busStopNaptanId) {
     }
 
     busList = busList.sort((bus1, bus2) => bus1.timeToStation - bus2.timeToStation).slice(0, 5);
-    console.log(busList);
-
 
     return busList;
 };
