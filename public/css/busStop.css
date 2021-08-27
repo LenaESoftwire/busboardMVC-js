@@ -1,12 +1,21 @@
 body {
-    background-color: grey;
+    /* background-color: grey; */
     color: orange;
 }
 
-.busStop {
+.bus-stop {
     padding: 10px;
     margin: 20px;
+}
 
+.stop-name {
+    display: flex;
+    color: black;
+    justify-content: space-between;
+}
+
+.bus {
+    height: 40px;
 }
 header {
     text-align: center;

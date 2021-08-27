@@ -15,8 +15,8 @@
     </header>
     <ul>
         <%data.forEach((stop)=> { %>
-            <div class="busStop">
-            <p><b><%= stop.showBusStopName() %></b></p>
+            <div class="bus-stop">
+            <div class="stop-name"><img class="bus" src="/bus.png"><p><b>><%= stop.showBusStopName() %></b></p></div>
             <% if (stop.buses===0) { %>
                 <p>
                     <%= `There are no buses coming to this stop` %>
