@@ -10,9 +10,12 @@
     <h1>Error</h1>
     <ul>
 
-        <li><b>
-                <%= data %>
-        </b></li>
+        <li>
+            <%= `Status: ${data.status}` %>
+        </li>
+        <li>
+            <%= `Error: ${data.error}` %>
+        </li>
 
     </ul>
 </body>

@@ -1,6 +1,7 @@
 const BusStop = require('../models/BusStop');
 const Coordinates = require('../models/Coordinates');
 const Bus = require('../models/Bus');
+const Error = require('../models/Error');
 const fetch = require('node-fetch');
 
 exports.getBusStops = async (req, res) => {
@@ -8,7 +9,20 @@ exports.getBusStops = async (req, res) => {
     try {
         let coordinates = await getCoordinatesByPostcode(req.params.postcode);
         console.log(coordinates);
+        if (coordinates.status === 404) {
+            res.render('errorView', {
+                data: coordinates,
+            });
+            return;
+        }
         let stops = await getNearestBusStops(req.params.postcode, coordinates);
+        console.log("stops");
+        if (stops.status === 404) {
+            res.render('errorView', {
+                data: stops,
+            });
+            return;
+        }
         console.log(`stops: ${stops}`);
         let buses = await getBuses(stops[0].busStopNaptan);
         stops[0].buses = buses;
@@ -55,7 +69,9 @@ async function getCoordinatesByPostcode(postcode) {
 
     let data = await fetch(`http://api.postcodes.io/Postcodes/${postcode}`)
         .then(result => result.json());
-    
+    if (data["status"] == 404) {
+        return new Error(data["status"], data["error"]);
+    }
 
     return new Coordinates([data["result"]["latitude"], data["result"]["longitude"]]);
 };
@@ -67,6 +83,11 @@ async function getNearestBusStops(postcode, coordinates) {
         .then(data => data["stopPoints"]
             .filter(a => a.modes.includes('bus'))
             .slice(0, 2));
+    console.log(busStops);
+
+    if (busStops.length == 0) {
+        return new Error(404, `There are no bus stops around ${postcode}`);
+    }
 
     let stops = [];
     for (let i = 0; i < 2; i++) {
@@ -88,7 +109,7 @@ async function getBuses(busStopNaptanId) {
             thisbus["lineId"], thisbus["destinationName"], thisbus["timeToStation"]);
         busList.push(bus);
     }
-    
+
     busList = busList.sort((bus1, bus2) => bus1.timeToStation - bus2.timeToStation).slice(0, 5);
     console.log(busList);
 

@@ -1,5 +1,6 @@
 class BusStop{
     constructor(postcode, naptanId, commonName, stopLetter, modes, buses) {
+        this.status = 200,
         this.postcode = postcode,
         this.busStopNaptan = naptanId,
         this.commonName = commonName,
