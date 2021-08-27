@@ -10,10 +10,12 @@
 </head>
 
 <body id="home">
-    <h1>Postcode <%= data[0].showPostCode() %>
-    </h1>
+    <header>
+        <h1>Postcode <%= data[0].showPostCode() %></h1>
+    </header>
     <ul>
         <%data.forEach((stop)=> { %>
+            <div class="busStop">
             <p><b><%= stop.showBusStopName() %></b></p>
             <% if (stop.buses===0) { %>
                 <p>
@@ -27,7 +29,9 @@
                             </p>
                         <% }); %>
                     <% }; %>
+                </div>
         <% }); %>
+    
     </ul>
 </body>
 
