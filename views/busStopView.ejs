@@ -13,19 +13,21 @@
     </h1>
     <ul>
         <%data.forEach((stop)=> { %>
-            <p><b>
-                    <%= stop.showBusStop() %>
-                </b>
-                <b>
-                    <%= stop.showBusStopName() %>
-                </b>
-            </p>
-            <%stop.buses.forEach((bus)=> { %>
+            <p><b><%= stop.showBusStopName() %></b></p>
+            <% if (stop.buses===0) { %>
                 <p>
-                    <%= `bus N${bus.lineId} going to ${bus.destination} arrives in ${parseInt(bus.timeToStation/60)} min` %>
+                    <%= `There are no buses coming to this stop` %>
                 </p>
-                <% }); %>
-                    <% }); %>
+                <% }; %>
+                    <% if (stop.buses!==0) { %>
+                        <%stop.buses.forEach((bus)=> { %>
+                            <p>
+                                <%= `Bus N${bus.lineId} going to ${bus.destination} arrives in
+                                    ${parseInt(bus.timeToStation/60)} min` %>
+                            </p>
+                        <% }); %>
+                    <% }; %>
+        <% }); %>
     </ul>
 </body>
 

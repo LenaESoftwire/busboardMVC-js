@@ -44,12 +44,6 @@ exports.getCoordinates = async (req, res) => {
 
     try {
         let data = await getCoordinatesByPostcode(req.params.postcode);
-        // if (data["error"] == "Invalid postcode") {
-        //     res.render('errorView', {
-        //         data: data["error"],
-        //     });
-        // }
-        // console.log(`lat ${data.latitude} lon ${data.longitude}`);
 
         res.render('busStopView', {
             data: data,
@@ -64,8 +58,6 @@ exports.getCoordinates = async (req, res) => {
 };
 
 async function getCoordinatesByPostcode(postcode) {
-
-    console.log(`called with ${postcode}`);
 
     let data = await fetch(`http://api.postcodes.io/Postcodes/${postcode}`)
         .then(result => result.json());
@@ -83,7 +75,6 @@ async function getNearestBusStops(postcode, coordinates) {
         .then(data => data["stopPoints"]
             .filter(a => a.modes.includes('bus'))
             .slice(0, 2));
-    console.log(busStops);
 
     if (busStops.length == 0) {
         return new Error(404, `There are no bus stops around ${postcode}`);
@@ -94,7 +85,6 @@ async function getNearestBusStops(postcode, coordinates) {
         stops.push(new BusStop(postcode, busStops[i]["naptanId"], busStops[i]["commonName"], busStops[i]["stopLetter"], busStops[i]["modes"], []));
     }
 
-    console.log(stops);
     return stops;
 }
 
