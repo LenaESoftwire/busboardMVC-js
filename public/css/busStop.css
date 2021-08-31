@@ -8,14 +8,41 @@ body {
     margin: 20px;
 }
 
-.stop-name {
+.stop {
     display: flex;
     color: black;
-    justify-content: space-between;
+    background: green;
+}
+
+.bus-info {
+    display: flex;
+    font-size: 30px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.line-id {
+    width: 8%;
+    padding: 0 12px;
+}
+
+.destination {
+    width: 40%;
+}
+
+
+.time {
+    background: black;
+    
 }
 
 .bus {
-    height: 40px;
+    height: 50px;
+}
+
+.stop-name {
+    font-size: 30px;
+    margin: 0 20px;
 }
 header {
     text-align: center;

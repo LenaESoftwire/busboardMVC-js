@@ -13,7 +13,7 @@ class BusStop{
     }
 
     showBusStopName() {
-        return `Busstop ${this.commonName} ${this.stopLetter}`;
+        return `${this.commonName} ${this.stopLetter}`;
     }
 };
 

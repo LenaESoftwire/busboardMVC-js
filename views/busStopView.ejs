@@ -16,20 +16,24 @@
     <ul>
         <%data.forEach((stop)=> { %>
             <div class="bus-stop">
-            <div class="stop-name"><img class="bus" src="/bus.png"><p><b>><%= stop.showBusStopName() %></b></p></div>
-            <% if (stop.buses===0) { %>
-                <p>
-                    <%= `There are no buses coming to this stop` %>
-                </p>
+            <div class="stop"><img class="bus" src="/bus.png"><p><b class="stop-name"><%= stop.showBusStopName() %></b></p></div>
+            <div class="time">
+                <% if (stop.buses===0) { %>
+                    <p>
+                        <%= `There are no buses coming to this stop` %>
+                    </p>
                 <% }; %>
-                    <% if (stop.buses!==0) { %>
-                        <%stop.buses.forEach((bus)=> { %>
-                            <p>
-                                <%= bus.showBus() %>
-                            </p>
-                        <% }); %>
-                    <% }; %>
-                </div>
+                <% if (stop.buses!==0) { %>
+                    <%stop.buses.forEach((bus)=> { %>
+                        <p class="bus-info">
+                            <a class="line-id"><%=bus.showLine() %></a>
+                            <a class="destination"><%=bus.showDestination() %></a>
+                            <a class="time"><%=bus.showTimeToStation() %></a>
+                        </p>                        
+                    <% }); %>
+                <% }; %>
+            </div>
+        </div>
         <% }); %>
     
     </ul>
